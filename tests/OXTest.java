@@ -6,7 +6,7 @@ class OXTest {
     @Test
     void getTableString() {
         OX ox = new OX();
-        assertEquals(" 0 1 2\n" +
+        assertEquals(" 012\n" +
                 "0---\n" +
                 "1---\n" +
                 "2---\n", ox.getTableString());
@@ -59,7 +59,7 @@ class OXTest {
     void getAt0_0() {
         OX ox = new OX();
         ox.put(0, 0);
-        assertEquals(" 0 1 2\n" +
+        assertEquals(" 012\n" +
                 "0X--\n" +
                 "1---\n" +
                 "2---\n", ox.getTableString());
@@ -148,7 +148,7 @@ class OXTest {
         ox.put(1, 1);
         ox.put(0, 2);
         ox.reset();
-        assertEquals(" 0 1 2\n" +
+        assertEquals(" 012\n" +
                 "0---\n" +
                 "1---\n" +
                 "2---\n", ox.getTableString());

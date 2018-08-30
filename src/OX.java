@@ -1,134 +1,118 @@
 public class OX {
-    String table[][]= {
-            {"  ", "0 ", "1 ", "2 "},
-            {"0 ", "- ", "- ", "- "},
-            {"1 ", "- ", "- ", "- "},
-            {"2 ", "- ", "- ", "- "}
-
+    public Object switchPlayer;
+    String table[][] = {
+            {" ", "0", "1", "2"},
+            {"0", "-", "-", "-"},
+            {"1", "-", "-", "-"},
+            {"2", "-", "-", "-"},
     };
-    private String CurrentPlayer;
+    private String currentPlayer;
     private int turnCount;
     private int scoreX;
     private int scoreO;
     private int scoreDraw;
 
-
-    public OX(){
-
-        CurrentPlayer = "X";
+    public OX() {
+        currentPlayer = "X";
         turnCount = 0;
-        scoreX = 0 ;
+        scoreX = 0;
         scoreO = 0;
         scoreDraw = 0;
     }
 
     public String getTableString() {
         String result = "";
-        for(int i = 0 ; i < 4 ;i++){
-            for(int j = 0 ; j<4 ;j++){
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
                 result = result + table[i][j];
-
             }
-            result = result +"\n";
-
+            result = result + "\n";
         }
         return result;
-
     }
 
     public String getCurrentPlayer() {
-        return CurrentPlayer;
+        return currentPlayer;
     }
 
     public void switchPlayer() {
-        if(CurrentPlayer.equals("X")) {
-            CurrentPlayer = "O";
-        }else{
-            CurrentPlayer = "X";
+        if (currentPlayer.equals("X")) {
+            currentPlayer = "O";
+        } else {
+            currentPlayer = "X";
         }
     }
 
     public boolean put(int col, int row) {
         try {
-            if (!table[row + 1][col + 1].equals("- ")) {
+            if (!table[row + 1][col + 1].equals("-")) {
                 return false;
-
             }
-            table[row + 1][col + 1] = CurrentPlayer;
-        }catch (ArrayIndexOutOfBoundsException e){
+            table[row + 1][col + 1] = currentPlayer;
+        } catch (ArrayIndexOutOfBoundsException e) {
             return false;
-
         }
         turnCount++;
-        if(checkWin(col,row)){
-            if(CurrentPlayer.equals("X")){
+        if(checkWin(col,row)) {
+            if(currentPlayer.equals("X")) {
                 scoreX++;
-            }else if(CurrentPlayer.equals("O")){
+            } else if(currentPlayer.equals("O")) {
                 scoreO++;
             }
-
         }
 
-        if(isDraw()){
+        if(isDraw()) {
             scoreDraw++;
         }
+
         return true;
     }
-    public String get(int col, int row) {
-        if(col > 2 || col < 0 || row > 2 || row < 0) {
-            return null;
 
+    public String get(int col, int row) {
+        if (col > 2 || col < 0 || row > 2 || row < 0) {
+            return null;
         }
-        return table[row+1][col+1];
+        return table[row + 1][col + 1];
     }
 
     public boolean checkWin(int col, int row) {
-        /*cheak ColWin*/
         boolean colWin = true;
-        for(int i = 0 ; i < 3 ; i++){
-            if(!table[i+1][col+1].equals(CurrentPlayer)){
+        for (int i = 0; i < 3; i++) {
+            if (!table[i + 1][col + 1].equals(currentPlayer)) {
                 colWin = false;
-
             }
         }
-        if(colWin){
+        if (colWin) {
             return true;
         }
-        /*cheak RowWin*/
+
         boolean rowWin = true;
-        for(int i = 0 ; i < 3 ; i++){
-            if(!table[row+1][i+1].equals(CurrentPlayer)){
+        for (int i = 0; i < 3; i++) {
+            if (!table[row + 1][i + 1].equals(currentPlayer)) {
                 rowWin = false;
-
             }
         }
-        if(rowWin){
+        if (rowWin) {
             return true;
         }
-
 
         boolean esWin = true;
-        for(int i = 0 ; i < 3 ; i++){
-            if(!table[i+1][i+1].equals(CurrentPlayer)){
-                esWin= false;
-
+        for (int i = 0; i < 3; i++) {
+            if (!table[i + 1][i + 1].equals(currentPlayer)) {
+                esWin = false;
             }
         }
-        if(esWin){
+        if (esWin) {
             return true;
         }
 
         boolean ssWin = true;
-        for(int i = 0 ; i < 3 ; i++){
-            /* col,row -> 2,0 , 1,1 , 0,2*/
-            /* row,col -> 1,3 , 2,2 , 3,1*/
-            /* col,row -> i:0 ,i+1,3-i , i:1 2,2 , 3,1*/
-            if(!table[i+1][3-i].equals(CurrentPlayer)){
-                ssWin= false;
-
+        for (int i = 0; i < 3; i++) {
+            if (!table[i + 1][3 - i].equals(currentPlayer)) {
+                ssWin = false;
             }
         }
-        if(ssWin){
+        if (ssWin) {
             return true;
         }
 
@@ -136,14 +120,12 @@ public class OX {
     }
 
     public void reset() {
-        for(int i = 0 ; i < 3 ; i++){
-            for(int j = 0 ; j< 3 ; j++){
-                table[i+1][j+1]="-";
-
-
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                table[i + 1][j + 1] = "-";
             }
         }
-        CurrentPlayer = "X";
+        currentPlayer = "X";
         turnCount = 0;
     }
 
@@ -152,9 +134,9 @@ public class OX {
     }
 
     public boolean isDraw() {
-        if (turnCount < 9){
+        if (turnCount < 9) {
             return false;
-    }
+        }
         return true;
     }
 
